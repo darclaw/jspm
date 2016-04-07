@@ -1,0 +1,24 @@
+plan
+
+each package lives in own directory
+creates a "graphical" ./config -h for a package
+packages live with a user
+	user bob installs a package into his ~/packages, then only he has access to that package
+	does not require root
+
+//this exists at /packages and at ~/packages and at /root/packages
+	/root/packages contains packages that need root access
+	/packages are packages for all users
+	~/packages are for only that user
+
+
+structure
+	sources
+	build-scripts
+	builds
+		has PREFIX=builds/$PKGNAME
+		has EPREFIX=build/$PKGNAME
+	paths
+		links to executables from builds
+	libs
+		links to libraries from builds
