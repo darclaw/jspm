@@ -14,11 +14,66 @@ packages live with a user
 
 structure
 	sources
+		git repos
 	build-scripts
 	builds
-		has PREFIX=builds/$PKGNAME
-		has EPREFIX=build/$PKGNAME
+		has PREFIX=buildss/$PKGNAME/
+		has EPREFIX=builds/$PKGNAME/
+		has ?CONFIG-DIR?=builds/$PKGNAME/config/
 	paths
 		links to executables from builds
 	libs
 		links to libraries from builds
+
+package manager
+	search <pkgname>
+		search github for pkg
+	add <repo> 
+		add repo to sources
+		add to pkg-database 
+	build <local-pkg>
+		run build-scripts/<local-pkg>.build  on sources/<local-pkg>
+		find libraries and executables
+			add them to paths and libs
+			add to pkg-database
+		set installed date in pkg-database
+	update <local-pkg>
+		git pull sources/<local-pkg>
+		set updated date in pkg-database
+	remove <local-pkg>
+		rm -r sources/<local-pkg>
+		rm build-scripts/<local-pkg>.build
+		remove broken symolic links
+			paths
+			libs
+		remove from pkg-database
+
+pkg-database
+	probs just json file
+	shema
+		pkgs[{
+			name,
+			repo,
+			file-location,
+			install-date,
+			updated-date,
+			build-file,
+			executables[{
+				executable-name,
+				executable-location
+			}],
+			libraries[{
+				lib-name,
+				lib-loc
+			}],
+			config-files[{
+				type: dir or file,
+				loc
+			}]
+		}]
+
+
+
+		
+need to figure out how to update the package manager
+	
