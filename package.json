@@ -1,0 +1,22 @@
+{
+  "name": "jspm",
+  "version": "0.0.1",
+  "description": "a user controlled package manager",
+  "main": "jspm.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darclaw/jspm.git"
+  },
+  "author": "darclaw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darclaw/jspm/issues"
+  },
+  "homepage": "https://github.com/darclaw/jspm#readme",
+  "dependencies": {
+    "simple-git": "^1.32.0"
+  }
+}

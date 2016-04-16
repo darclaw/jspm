@@ -17,7 +17,7 @@ structure
 		git repos
 	build-scripts
 	builds
-		has PREFIX=buildss/$PKGNAME/
+		has PREFIX=builds/$PKGNAME/
 		has EPREFIX=builds/$PKGNAME/
 		has ?CONFIG-DIR?=builds/$PKGNAME/config/
 	paths
@@ -71,6 +71,11 @@ pkg-database
 				loc
 			}]
 		}]
+
+controllers
+	github
+	pkgdatabase
+	pkg
 
 
 
