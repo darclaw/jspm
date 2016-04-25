@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/darclaw/jspm#readme",
   "dependencies": {
+    "jsonfile": "^2.3.0",
     "simple-git": "^1.32.0"
   }
 }
