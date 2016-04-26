@@ -27,10 +27,10 @@ structure
 
 package manager
 	search <pkgname>
-		search github for pkg
-	add <repo> 
-		add repo to sources
-		add to pkg-database 
+		search github for pkg  #need to make it more pretty
+	add <repo>					#done
+		add repo to sources	#done
+		add to pkg-database	#done
 	build <local-pkg>
 		run build-scripts/<local-pkg>.build  on sources/<local-pkg>
 		find libraries and executables
@@ -41,11 +41,12 @@ package manager
 		git pull sources/<local-pkg>
 		set updated date in pkg-database
 	remove <local-pkg>
-		rm -r sources/<local-pkg>
-		rm build-scripts/<local-pkg>.build
+		rm -r builds/<local-pkg>
 		remove broken symolic links
 			paths
 			libs
+		rm -r sources/<local-pkg>
+		rm build-scripts/<local-pkg>.build
 		remove from pkg-database
 
 pkg-database

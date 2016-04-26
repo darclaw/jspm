@@ -1,11 +1,14 @@
 "use strict"
 var simpleGitFactory = require('simple-git');
 var https = require('https');
+var fs = require('fs');
+var rimraf = require('rimraf');
+
 var config = require('../config.json');
 var pkgdb = require('../controllers/pkgdb');
 
 
-var gitter = simpleGitFactory(config.sourceDir);
+var gitter = simpleGitFactory(config.jspmRoot+config.sourceDir);
 
 exports.search= function(pkg){
 	//same as "searching for "+pkg
@@ -44,4 +47,16 @@ exports.add = function(repo, pkgname){
 				}
 			});
 	});
+}
+exports.unadd= function(pkgname){
+	var unaddP = new Promise(function(resolve,reject){
+		rimraf(config.jspmRoot+config.sourceDir+pkgname,{disableGlob:true}, function(err){
+			if(err){
+				reject(err);
+			}else{
+				resolve();
+			}
+		});
+	});
+
 }
