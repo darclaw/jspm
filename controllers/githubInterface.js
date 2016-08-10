@@ -59,4 +59,6 @@ exports.unadd= function(pkgname){
 		});
 	});
 
+	return unaddP;
+
 }

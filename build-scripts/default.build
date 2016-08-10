@@ -1,0 +1,4 @@
+#!/bin/sh
+./configure --prefix=$INSTALLPREFIX --exec-prefix=$INSTALLEPREFIX && \
+make -l$LOAD && \
+make install

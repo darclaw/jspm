@@ -1,6 +1,8 @@
 "use strict"
 var github = require('./controllers/githubInterface');
 var pkgdb = require('./controllers/pkgdb');
+var builder = require('./controllers/builder');
+
 var config = require('./config.json');
 
 function search(pkg){
@@ -49,6 +51,27 @@ function remove(pkgname){
 			console.log(err.stack);
 		});
 }
+function build(pkgname){
+	var configure = function configurePkg(){
+		return Promise.resolve(builder.config(pkgname));
+	}
+	var build = function buildpkg(){
+		return Promise.resolve(builder.build(pkgname));
+	}
+	var install = function installpkg(){
+		return Promise.resolve(builder.install(pkgname));
+	}
+	var link = function linkpkg(){
+		return Promise.resolve(builder.link(pkgname));
+	}
+	build()
+		.then(install)
+		.then(link)
+		.catch(function(err){
+			console.log(err.stack);
+		}
+	
+}
 
 //looks at cmdline args and runs the commands
 function main(){
@@ -74,6 +97,7 @@ function main(){
 		case 'b':
 		case 'build':
 			//build pkg
+			build(args[0]);
 			break;
 
 		case 'u':

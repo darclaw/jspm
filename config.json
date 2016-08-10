@@ -1,5 +1,8 @@
 {
 	"sourceDir":"sources/",
 	"dbFile":"pkgdb.json",
-	"jspmRoot":"/home/darclaw/projects/linux/jspm/"
+	"jspmRoot":"/home/darclaw/projects/linux/jspm/",
+	"load":3,
+	"PREFIX":"",
+	"EPREFIX":""
 }
