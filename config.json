@@ -1,8 +1,13 @@
 {
-	"sourceDir":"sources/",
 	"dbFile":"pkgdb.json",
-	"jspmRoot":"/home/darclaw/projects/linux/jspm/",
-	"load":3,
-	"PREFIX":"",
-	"EPREFIX":""
+	"jspmRoot":"/home/sab-darclaw/packages/jspm/",
+	"packageRoot":"/home/sab-darclaw/packages/",
+	"build":{
+		"sourceDir":"sources/",
+		"buildScriptRoot":"build-scripts/",
+		"load":3,
+		"PREFIX":"",
+		"EPREFIX":"",
+		"defaultBuildScript":"default.build.json"
+	}
 }

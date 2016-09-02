@@ -5,22 +5,36 @@ var builder = require('./controllers/builder');
 
 var config = require('./config.json');
 
+var logger = function logger(data){
+	console.log(this.method+this.timesCalled+" data="+data);
+
+	if(!Number.isNaN(this.timesCalled)){
+		this.timesCalled++;
+	}else{
+		this.timesCalled=0;
+	}
+
+	return data;
+}
 function search(pkg){
 	return github.search(pkg);
 }
 function add(pkgrepo, pkgname){
+	var boundLog = logger.bind({method:"/jspm/add", timesCalled:0});
 	var pkgaddedQ = github.add(pkgrepo, pkgname)
+		.then(boundLog)
 		.then(function fufilled(){
 			//promise
 			return pkgdb.add_pkg({
 				name:pkgname,
 				repo: pkgrepo,
-				file_location: config.jspmRoot+config.sourceDir+pkgname,
+				source_location: config.packageRoot+config.build.sourceDir+pkgname,
 				add_date: new Date()
 			});
 		})
+		.then(boundLog)
 		.catch(function catcher(err){
-			console.log(err.stack);
+			console.log("/jspm/add/catcher err "+err.stack);
 		});
 	return Promise.resolve(pkgaddedQ);
 }
@@ -44,6 +58,7 @@ function remove(pkgname){
 
 	unclonePkg()
 		.then(pkgdbRemove)
+		//.then(unclonePkg) //having issues
 		.then(function fufilled(){
 			console.log(`removed ${pkgname} correctly`);
 		})
@@ -52,24 +67,30 @@ function remove(pkgname){
 		});
 }
 function build(pkgname){
+	var boundLog = logger.bind({method:"/jspm/build", timesCalled:0});
 	var configure = function configurePkg(){
-		return Promise.resolve(builder.config(pkgname));
+		return Promise.resolve(builder.configure(pkgname));
 	}
 	var build = function buildpkg(){
-		return Promise.resolve(builder.build(pkgname));
+		return Promise.resolve(builder.run("build",pkgname));
 	}
 	var install = function installpkg(){
-		return Promise.resolve(builder.install(pkgname));
+		return Promise.resolve(builder.run("install",pkgname));
 	}
 	var link = function linkpkg(){
 		return Promise.resolve(builder.link(pkgname));
 	}
-	build()
+	configure()
+		.then(boundLog)
+		.then(build)
+		.then(boundLog)
 		.then(install)
+		.then(boundLog)
 		.then(link)
+		.then(boundLog)
 		.catch(function(err){
 			console.log(err.stack);
-		}
+		});
 	
 }
 
@@ -85,11 +106,13 @@ function main(){
 		case 's':
 		case 'search': 
 			//search for pkg
-			search(ars[0]);
+			search(args[0]);
 			break;
 
 		case 'a':
 		case 'add': 
+		case 'g':
+		case 'get':
 			//add repo
 			add(args[0],args[1]);
 			break;
@@ -116,6 +139,10 @@ function main(){
 		case 'help':
 		default:
 			//print help
+			console.log("this is the help page, fill me in");
+			console.log("jspm [a,add,g,get] gitUrl name : get package source from gitUrl and name it name");
+			console.log("jspm [r,remove] name : remove package by name");
+			console.log("jspm [b,build] name : build package by name");
 			break;
 	}
 }

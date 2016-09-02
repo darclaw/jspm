@@ -17,7 +17,10 @@
   },
   "homepage": "https://github.com/darclaw/jspm#readme",
   "dependencies": {
-    "jsonfile": "^2.3.0",
+    "child-process-promise": "^2.0.3",
+    "jsonfile": "^2.3.1",
+    "nodegit": "^0.14.1",
+    "require.async": "^0.1.1",
     "rimraf": "^2.5.2",
     "simple-git": "^1.32.0"
   }
